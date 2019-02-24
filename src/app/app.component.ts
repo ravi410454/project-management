@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectService } from './project.service';
-import { TaskService } from './task.service';
-import { UsersService } from './users.service';
+
+import './modal/_content/app.less';
+import './modal/_content/modal.less';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ import { UsersService } from './users.service';
 export class AppComponent {
   title = 'Project management';
 
-  constructor() {  }
+  constructor() { }
 
   ngOnInit() {
   }

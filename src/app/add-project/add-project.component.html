@@ -1,3 +1,78 @@
-<p>
-  add-project works!
-</p>
+<div class="container">
+  <div class="row align-items-start">
+    <div class="col-8">
+      <label for="project">Project:</label>
+      <input id="project" name="project" [(ngModel)]="userData.project" required />
+    </div>
+  </div>
+  <div class="row align-items-start">
+    <div class="col-2"><input type="checkbox" (click)="setStartEndDate()" /></div>
+    <div class="col-3"><input id="startDate" type="date" [(ngModel)]="userData.startDate" /></div>
+    <div class="col-3"><input id="endDate" type="date" [(ngModel)]="userData.endDate" /></div>
+  </div>
+  <div class="row align-items-start">
+    <div class="col-2"> <label for="priority">Priority:</label></div>
+    <div class="col-6">
+      <input id="priority" width="1" type="range" step="1" min="0" max="30" [(ngModel)]="userData.priority" />
+    </div>
+  </div>
+  <div class="row align-items-start">
+    <div class="col-8">
+      <div class="col-6">
+        <label for="manager">Manager:</label>
+        <input id="manager" name="manager" [(ngModel)]="userData.managerId" />
+        
+        <jw-modal id="custom-modal-1">
+            <h1>A Custom Modal!</h1>
+            <p>Home page text: <input type="text" [(ngModel)]="bodyText" /></p>
+            <button (click)="closeModal('custom-modal-1');">Close</button>
+        </jw-modal>
+      </div>
+      <div class="col-2"><button (click)="openModal('custom-modal-1')">Open Modal 1</button></div>
+      <p>{{bodyText}}</p>
+      
+    </div>
+  </div>
+  <div class="row align-items-end">
+    <div class="col-4"><button (click)="createProject()" class="btn btn-gray"> Add</button></div>
+    <div class="col-2"><button (click)="updateProject()" class="btn btn-gray"> Update</button></div>
+    <div class="col-2"><button (click)="reset()" class="btn btn-gray"> Reset</button></div>
+  </div>
+</div>
+<div class="container">
+  <div class="row" *ngFor="let project of projects | filter: searchText">
+    <div class="col-4">
+      <div class="row">
+        <div class="col-1">Project: </div>
+        <div class="col-3">{{project.project}}</div>
+      </div>
+      <div class="row">
+        <div class="col-1">No. of Tasks: </div>
+        <div class="col-1">{{project.taskCount}}</div>
+        <div class="col-1">Completed: </div>
+        <div class="col-1">{{project.completed}}</div>
+      </div>
+      <div class="row">
+        <div class="col-1">Start Date: </div>
+        <div class="col-1">{{project.startDate}}</div>
+        <div class="col-1">End Date: </div>
+        <div class="col-1">{{project.endDate}}</div>
+      </div>
+    </div>
+    <div class="col-2">
+      <span>
+        <div class="row">Priority</div>
+        <div class="row">{{project.priority}}</div>
+      </span>
+    </div>
+    <div class="col-2">
+      <div class="row">
+        <button (click)="editProject(project)" class="btn btn-gray"> Update</button>
+      </div>
+      <div class="row"><button (click)="suspendProject(project)" style="margin-left: 20px;" class="btn btn-gray">
+          Suspend</button></div>
+    </div>
+    <hr>
+  </div>
+
+</div>

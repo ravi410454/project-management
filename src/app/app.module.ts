@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NguiPopupModule } from '@ngui/popup';
 
 import { AppComponent } from './app.component';
 import { AddUserComponent } from './add-user/add-user.component';
@@ -14,6 +16,8 @@ import { ProjectService } from './project.service';
 import { TaskService } from './task.service';
 import { UsersService } from './users.service';
 import { NavigationComponent } from './navigation/navigation.component';
+import { ModalComponent } from './modal/_directives';
+import { ModalService } from './modal/_services';
 
 const appRoutes: Routes = [
   {
@@ -45,16 +49,19 @@ const appRoutes: Routes = [
     AddProjectComponent,
     AddTaskComponent,
     ViewTaskComponent,
-    NavigationComponent
+    NavigationComponent,
+    ModalComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
     FormsModule,
     BrowserModule,
     HttpClientModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    NgbModule.forRoot(),
+    NguiPopupModule
   ],
-  providers: [ProjectService, TaskService, UsersService],
+  providers: [ProjectService, TaskService, UsersService, ModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
