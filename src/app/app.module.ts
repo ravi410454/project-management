@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NguiPopupModule } from '@ngui/popup';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
+import { MatInputModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { AddUserComponent } from './add-user/add-user.component';
@@ -16,8 +17,7 @@ import { ProjectService } from './project.service';
 import { TaskService } from './task.service';
 import { UsersService } from './users.service';
 import { NavigationComponent } from './navigation/navigation.component';
-import { ModalComponent } from './modal/_directives';
-import { ModalService } from './modal/_services';
+import { ManagerModalComponent } from './modal/manager-modal.component';
 
 const appRoutes: Routes = [
   {
@@ -50,7 +50,7 @@ const appRoutes: Routes = [
     AddTaskComponent,
     ViewTaskComponent,
     NavigationComponent,
-    ModalComponent
+    ManagerModalComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -58,10 +58,12 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     Ng2SearchPipeModule,
-    NgbModule.forRoot(),
-    NguiPopupModule
+    BrowserAnimationsModule,
+    MaterialModule,
+    MatInputModule
   ],
-  providers: [ProjectService, TaskService, UsersService, ModalService],
-  bootstrap: [AppComponent]
+  providers: [ProjectService, TaskService, UsersService],
+  bootstrap: [AppComponent],
+  entryComponents: [ManagerModalComponent]
 })
 export class AppModule { }

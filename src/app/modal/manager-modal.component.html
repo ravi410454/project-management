@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Select a manager for project.</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <table>
+      <thead>
+        <th>Id</th><th>First Name</th><th>Last Name</th><th>Select</th>
+      </thead>
+      <tr *ngFor="let user of users">
+        <td>
+          <input disabled matInput [(ngModel)]="user.userId">
+        </td>
+        <td>
+          <input disabled matInput [(ngModel)]="user.firstName">
+        </td>
+        <td>
+          <input disabled matInput [(ngModel)]="user.lastName">
+        <td>
+          <button mat-button [mat-dialog-close]="user">Select</button>
+        </td>
+      </tr>
+    </table>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>

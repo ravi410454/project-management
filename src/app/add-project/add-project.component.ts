@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { ProjectService } from '../project.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalService } from '../modal/_services';
+import { UsersService } from '../users.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ManagerModalComponent } from '../modal/manager-modal.component';
+//import { ManagerData } from '../ManagerData';
 
 declare var $: any;
 
@@ -11,80 +13,137 @@ declare var $: any;
   styleUrls: ['./add-project.component.css']
 })
 export class AddProjectComponent implements OnInit {
-  @Input() userData = { projectId: '', project: '', startDate: '', endDate: '', priority: '' };
+  @Input() projectData = { projectId: '', project: '', startDate: '', endDate: '', priority: '', managerId: '' };
   projects: any = [];
-  isStartEndDateEnabled = false;
-  private bodyText: string;
+  users: any = [];
+  enableDates = false;
+  showAdd = true;
+  showUpdate = false;
+  managerName: string;
+  managerId: string;
 
-  constructor(private modalService: ModalService, public rest: ProjectService, private route: ActivatedRoute, private router: Router) { }
+  constructor(public dialog: MatDialog, 
+    public usersService: UsersService, 
+    public projectService: ProjectService) { }
 
   ngOnInit() {
     this.getProjects();
-    this.bodyText = 'This text can be updated in modal 1';
+    this.getUsers();
   }
-
-  openModal(id: string) {
-    this.modalService.open(id);
-  }
-
-  closeModal(id: string) {
-    this.modalService.close(id);
-  }
-
 
   getProjects() {
     this.projects = [];
-    this.rest.getProjects().subscribe((data: {}) => {
+    this.projectService.getProjects().subscribe((data: {}) => {
       console.log(data);
       this.projects = data;
     });
   }
 
+  sortByPriority() {
+    this.projects = this.projects.sort((n1, n2) => {
+      return n1.priority - n2.priority;
+    });
+  }
+
+  sortByStartDate() {
+    this.projects = this.projects.sort((n1, n2) => {
+      if (n1.startDate > n2.startDate) {
+        return 1;
+      }
+      if (n1.startDate < n2.startDate) {
+        return -1;
+      }
+      return 0;
+    });
+  }
+
+  sortByEndDate() {
+    this.projects = this.projects.sort((n1, n2) => {
+      if (n1.endDate > n2.endDate) {
+        return 1;
+      }
+      if (n1.endDate < n2.endDate) {
+        return -1;
+      }
+      return 0;
+    });
+  }
+
+  sortByCompleted() {
+    this.projects = this.projects.sort((n1, n2) => {
+      return n1.completed - n2.completed;
+    });
+  }
+
+  getUsers() {
+    this.users = [];
+    this.usersService.getUsers().subscribe((data: {}) => {
+      console.log(data);
+      this.users = data;
+    });
+  }
+
   createProject() {
-    this.rest.addProject(this.userData)
+    this.projectService.addProject(this.projectData)
       .subscribe(res => {
         this.getProjects();
       }, (err) => {
         console.log(err);
       }
       );
+    this.reset();
   }
 
   editProject(project) {
-    this.userData = { projectId: project.projectId, project: project.project, startDate: project.startDate, endDate: project.endDate, priority: project.priority };
+    this.showUpdate = true;
+    this.showAdd = false;
+    this.projectData = { projectId: project.projectId, project: project.project, startDate: project.startDate, endDate: project.endDate, priority: project.priority, managerId: project.managerId };
   }
 
   updateProject(project) {
-    console.log(this.userData.priority);
-    this.rest.updateProject(this.userData.projectId, this.userData)
+    this.projectService.updateProject(this.projectData.projectId, this.projectData)
       .subscribe(res => {
         this.getProjects();
       }, (err) => {
         console.log(err);
       }
       );
+    this.showUpdate = false;
+    this.showAdd = true;
+    this.reset();
   }
 
   reset() {
-    this.userData = { projectId: '', project: '', startDate: '', endDate: '', priority: '' };
+    this.projectData = { projectId: '', project: '', startDate: '', endDate: '', priority: '', managerId: '' };
+    this.managerName = "";
   }
 
   setStartEndDate() {
-    this.isStartEndDateEnabled = !this.isStartEndDateEnabled;
-    $(document).ready(function () {
+    this.enableDates = !this.enableDates;
+    $(document).ready( function() {
+      $('#startDate').val(new Date());
+  });​
       var date = new Date();
 
       var day = date.getDate();
       var month = date.getMonth() + 1;
       var year = date.getFullYear();
 
-      var today = year + "-" + month + "-" + day;
+      var today = month + "/" + day + "/" +year ;
       var nextDay = year + "-" + month + "-" + (day + 1);
-      $("#startDate").attr("value", today);
-      $("#endDate").attr("value", nextDay);
-      $("#startDate").attr("disabled", this.isStartEndDateEnabled);
-      $("#endDate").attr("disabled", this.isStartEndDateEnabled);
+      this.projectData.startDate = year + "-" + month + "-" + day ;
+      this.projectData.endDate = nextDay;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ManagerModalComponent, {
+      width: '400px',
+      data: { name: this.managerName, id: this.managerId }
     });
-    return;
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.managerName = result.firstName + " " + result.lastName;
+      this.projectData.managerId = result.userId;
+    });
   }
 }
