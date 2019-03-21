@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Select a project for task.</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <table>
+      <thead>
+        <th>Project Id</th><th>Project Name</th><th>Select</th>
+      </thead>
+      <tr *ngFor="let project of projects">
+        <td>
+          <input disabled matInput [(ngModel)]="project.projectId">
+        </td>
+        <td>
+          <input disabled matInput [(ngModel)]="project.project">
+        </td>
+        <td>
+          <button mat-button [mat-dialog-close]="project">Select</button>
+        </td>
+      </tr>
+    </table>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>

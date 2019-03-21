@@ -1,21 +1,36 @@
-<div class="container-fluid">
+<div class="container-fluid" style="padding-left: 20px">
   <div class="row">
-    <div class="col-md-1 ml-auto">Project: </div>
-    <div class="col-md-1 ml-auto"><input [(ngModel)]="inputProjectName.projectName" placeholder="" /></div>
-    <div class="col-md-1 ml-auto"><button type="button" class="btn btn-gray" data-toggle="modal"
-        data-target="#exampleModalCenter">
-        Search
-      </button>
+
+    <div mat-dialog-content style="padding-left: 20px">
+        &nbsp;&nbsp;Project:
+      <input disabled [(ngModel)]="projectName" />
+      <button mat-stroked-button (click)="openDialog()"> Search </button>
     </div>
-    <div class="col-md-1 ml-auto">Sort Task By: </div>
-    <div class="col-md-1 ml-auto"><button type="button" class="btn btn-gray">Start Date</button></div>
-    <div class="col-md-1 ml-auto"><button type="button" class="btn btn-gray">End Date</button></div>
-    <div class="col-md-1 ml-auto"><button type="button" class="btn btn-gray">Priority</button></div>
-    <div class="col-md-1 ml-auto"><button type="button" class="btn btn-gray">Completed</button></div>
+    
+    <div mat-dialog-content style="padding-left: 20px">
+      &nbsp;&nbsp;Sort Task By:
+      <button mat-stroked-button (click)="sortByStart()">Start Date</button>
+      <button mat-stroked-button (click)="sortByEnd()">End Date</button>
+      <button mat-stroked-button (click)="sortByPriority()">Priority</button>
+      <button mat-stroked-button (click)="sortByStatus()">Completed</button>
+    </div>
+
   </div>
+  
   <div class="row">
     <table class="table">
-      <tr *ngFor="let task of project.tasks">
+      <thead>
+        <th>Task Id</th>
+        <th>Task</th>
+        <th>Parent</th>
+        <th>Priority</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+      </thead>
+      <tr *ngFor="let task of tasks">
         <td class="hidden">{{task.taskId}}</td>
         <td>{{task.task}}</td>
         <td>{{task.parentId}}</td>
@@ -24,31 +39,10 @@
         <td>{{task.endDate}}</td>
         <td>{{task.status}}</td>
         <td>
-          <button (click)="editTask(task)" style="margin-left: 20px;" class="btn btn-info"> Edit</button>
-          <button (click)="endTask(task)" class="btn btn-info"> End Task</button>
+          <button mat-stroked-button (click)="editTask(task)" style="margin-left: 20px;"> Edit</button>
+          <button mat-stroked-button (click)="endTask(task)"> End Task</button>
         </td>
       </tr>
-      </tbody>
     </table>
   </div>
 </div>
-
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>

@@ -1,3 +1,90 @@
-<p>
-  add-task works!
-</p>
+<div mat-dialog-content style="padding-left: 20px">
+  <label style="width: 50px;"> Project: </label>
+  <input type="hidden" [(ngModel)]="taskData.projectId" />
+  <input disabled [(ngModel)]="taskData.projectName" />
+  <button mat-stroked-button (click)="openProjectDialog()"> Search </button>
+</div>
+
+<div mat-dialog-content style="padding-left: 20px">
+  &nbsp;&nbsp;Task:
+  <input [(ngModel)]="taskData.taskName" />
+  <br>
+  <input type="checkbox" id="parentTask" (click)="selectParentTask()" /> Parent Task
+</div>
+
+<div mat-dialog-content style="padding-left: 20px">
+  <label style="width: 50px;"> Parent Task: </label>
+  <input type="hidden" [(ngModel)]="taskData.projectId" />
+  <input disabled [(ngModel)]="taskData.projectName" />
+  <button mat-stroked-button (click)="openProjectDialog()"> Search </button>
+</div>
+
+<div mat-dialog-content style="padding-left: 20px">
+  &nbsp;&nbsp;Priority:
+  0<input id="priority" style="padding-top: 10px;" width="400" type="range" value="0" list="tickmarks" step="1" min="0"
+    max="30" [(ngModel)]="taskData.priority">30
+  <datalist id="tickmarks">
+    <option value="0" label="0">
+    <option value="1">
+    <option value="2">
+    <option value="3">
+    <option value="4">
+    <option value="5">
+    <option value="6">
+    <option value="7">
+    <option value="8">
+    <option value="9">
+    <option value="10">
+    <option value="11">
+    <option value="12">
+    <option value="13">
+    <option value="14">
+    <option value="15">
+    <option value="16">
+    <option value="17">
+    <option value="18">
+    <option value="19">
+    <option value="20">
+    <option value="21">
+    <option value="22">
+    <option value="23">
+    <option value="24">
+    <option value="25">
+    <option value="26">
+    <option value="27">
+    <option value="28">
+    <option value="29">
+    <option value="30" label="30">
+  </datalist>
+</div>
+
+<div mat-dialog-content style="padding-left: 20px">
+  &nbsp;&nbsp;Start Date:
+  <input id="startDate" type="date" [(ngModel)]="taskData.startDate" />
+  &nbsp;&nbsp;End Date:
+  <input id="endDate" type="date" [(ngModel)]="taskData.endDate" />
+</div>
+
+<div mat-dialog-content style="padding-left: 20px">
+  &nbsp;&nbsp; User:
+  <input type="hidden" [(ngModel)]="taskData.managerId" />
+  <input type="text" disabled [(ngModel)]="taskData.managerName" />
+  <button (click)="openUserDialog()"> Search </button>
+</div>
+
+<div mat-dialog-content style="padding-left: 20px">
+  <div style="width: 40%;text-align: right;">
+    <div *ngIf="showAdd" style="display: inline-block">
+      <button (click)="createTask()" style="margin-left: 20px;" class="btn btn-info" style="margin-left: 20px;">
+        Add</button>
+    </div>
+    <div *ngIf="showUpdate" style="display: inline-block">
+      <button (click)="updateTask()" style="margin-left: 20px;" class="btn btn-info" style="margin-left: 20px;">
+        Update</button>
+    </div>
+    <div style="display: inline-block">
+      <button (click)="reset()" style="margin-left: 20px;" class="btn btn-info" style="margin-left: 20px;">
+        Reset</button>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,6 @@ import { ProjectService } from '../project.service';
 import { UsersService } from '../users.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ManagerModalComponent } from '../modal/manager-modal.component';
-//import { ManagerData } from '../ManagerData';
 
 declare var $: any;
 

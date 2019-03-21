@@ -18,6 +18,7 @@ import { TaskService } from './task.service';
 import { UsersService } from './users.service';
 import { NavigationComponent } from './navigation/navigation.component';
 import { ManagerModalComponent } from './modal/manager-modal.component';
+import { ProjectModalComponent } from './modal/project-modal.component';
 
 const appRoutes: Routes = [
   {
@@ -50,7 +51,8 @@ const appRoutes: Routes = [
     AddTaskComponent,
     ViewTaskComponent,
     NavigationComponent,
-    ManagerModalComponent
+    ManagerModalComponent,
+    ProjectModalComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -64,6 +66,6 @@ const appRoutes: Routes = [
   ],
   providers: [ProjectService, TaskService, UsersService],
   bootstrap: [AppComponent],
-  entryComponents: [ManagerModalComponent]
+  entryComponents: [ManagerModalComponent, ProjectModalComponent]
 })
 export class AppModule { }
