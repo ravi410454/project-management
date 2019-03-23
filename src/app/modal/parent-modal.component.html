@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Select a parent task.</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <table>
+      <thead>
+        <th>Id</th><th>Parent Task</th><th>Select</th>
+      </thead>
+      <tr *ngFor="let parent of parents">
+        <td>
+          <input disabled matInput [(ngModel)]="parent.parentId" style="width: 50px;">
+        </td>
+        <td>
+          <input disabled matInput [(ngModel)]="parent.parentTask" style="width: 200px;">
+        </td>
+        <td>
+          <button mat-button [mat-dialog-close]="parent">Select</button>
+        </td>
+      </tr>
+    </table>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>

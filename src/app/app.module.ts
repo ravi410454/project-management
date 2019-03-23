@@ -19,6 +19,7 @@ import { UsersService } from './users.service';
 import { NavigationComponent } from './navigation/navigation.component';
 import { ManagerModalComponent } from './modal/manager-modal.component';
 import { ProjectModalComponent } from './modal/project-modal.component';
+import { ParentModalComponent } from './modal/parent-modal.component';
 
 const appRoutes: Routes = [
   {
@@ -52,7 +53,8 @@ const appRoutes: Routes = [
     ViewTaskComponent,
     NavigationComponent,
     ManagerModalComponent,
-    ProjectModalComponent
+    ProjectModalComponent,
+    ParentModalComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -66,6 +68,6 @@ const appRoutes: Routes = [
   ],
   providers: [ProjectService, TaskService, UsersService],
   bootstrap: [AppComponent],
-  entryComponents: [ManagerModalComponent, ProjectModalComponent]
+  entryComponents: [ManagerModalComponent, ProjectModalComponent, ParentModalComponent]
 })
 export class AppModule { }

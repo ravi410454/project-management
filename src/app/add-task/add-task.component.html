@@ -1,27 +1,21 @@
-<div mat-dialog-content style="padding-left: 20px">
-  <label style="width: 50px;"> Project: </label>
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;"> Project: </label>
   <input type="hidden" [(ngModel)]="taskData.projectId" />
-  <input disabled [(ngModel)]="taskData.projectName" />
+  <input disabled [(ngModel)]="taskData.project" style="width: 350px;" />
   <button mat-stroked-button (click)="openProjectDialog()"> Search </button>
 </div>
 
-<div mat-dialog-content style="padding-left: 20px">
-  &nbsp;&nbsp;Task:
-  <input [(ngModel)]="taskData.taskName" />
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;"> Task: </label>
+  <input [(ngModel)]="taskData.task" style="width: 350px;" />
   <br>
-  <input type="checkbox" id="parentTask" (click)="selectParentTask()" /> Parent Task
+  <label style="width: 100px;"> </label>
+  <input type="checkbox" id="parentTask" [(ngModel)]="isParentTask"/> Parent Task
 </div>
 
-<div mat-dialog-content style="padding-left: 20px">
-  <label style="width: 50px;"> Parent Task: </label>
-  <input type="hidden" [(ngModel)]="taskData.projectId" />
-  <input disabled [(ngModel)]="taskData.projectName" />
-  <button mat-stroked-button (click)="openProjectDialog()"> Search </button>
-</div>
-
-<div mat-dialog-content style="padding-left: 20px">
-  &nbsp;&nbsp;Priority:
-  0<input id="priority" style="padding-top: 10px;" width="400" type="range" value="0" list="tickmarks" step="1" min="0"
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;"> Priority: </label>
+  0<input id="priority" [disabled]="isParentTask" style="padding-top: 10px;" width="400" type="range" value="0" list="tickmarks" step="1" min="0"
     max="30" [(ngModel)]="taskData.priority">30
   <datalist id="tickmarks">
     <option value="0" label="0">
@@ -58,33 +52,37 @@
   </datalist>
 </div>
 
-<div mat-dialog-content style="padding-left: 20px">
-  &nbsp;&nbsp;Start Date:
-  <input id="startDate" type="date" [(ngModel)]="taskData.startDate" />
-  &nbsp;&nbsp;End Date:
-  <input id="endDate" type="date" [(ngModel)]="taskData.endDate" />
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;"> Parent Task: </label>
+  <input type="hidden" [(ngModel)]="taskData.parentId" />
+  <input disabled [(ngModel)]="taskData.parent" style="width: 350px;" />
+  <button mat-stroked-button (click)="openParentDialog()"> Search </button>
 </div>
 
-<div mat-dialog-content style="padding-left: 20px">
-  &nbsp;&nbsp; User:
-  <input type="hidden" [(ngModel)]="taskData.managerId" />
-  <input type="text" disabled [(ngModel)]="taskData.managerName" />
-  <button (click)="openUserDialog()"> Search </button>
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;"> Start Date: </label>
+  <input id="startDate" [disabled]="isParentTask" type="date" [(ngModel)]="taskData.startDate" />
+  <label style="width: 75px;"> End Date: </label>
+  <input id="endDate" [disabled]="isParentTask" type="date" [(ngModel)]="taskData.endDate" />
 </div>
 
-<div mat-dialog-content style="padding-left: 20px">
-  <div style="width: 40%;text-align: right;">
-    <div *ngIf="showAdd" style="display: inline-block">
-      <button (click)="createTask()" style="margin-left: 20px;" class="btn btn-info" style="margin-left: 20px;">
-        Add</button>
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;"> User: </label>
+  <input type="hidden" [(ngModel)]="taskData.userId" />
+  <input type="text" disabled [(ngModel)]="taskData.user" style="width: 350px;" />
+  <button mat-stroked-button (click)="openUserDialog()"> Search </button>
+</div>
+
+<div mat-dialog-content style="padding-left: 20px; padding-top: 20px;">
+  <div style="width: 525px; text-align: right;">
+    <div *ngIf="showAdd" style="display: inline-block; width: 100px;">
+      <button mat-stroked-button (click)="createTask()" style="margin-left: 20px;"> Add </button>
     </div>
-    <div *ngIf="showUpdate" style="display: inline-block">
-      <button (click)="updateTask()" style="margin-left: 20px;" class="btn btn-info" style="margin-left: 20px;">
-        Update</button>
+    <div *ngIf="showUpdate" style="display: inline-block; width: 100px;">
+      <button mat-stroked-button (click)="updateTask()" style="margin-left: 20px;"> Update </button>
     </div>
-    <div style="display: inline-block">
-      <button (click)="reset()" style="margin-left: 20px;" class="btn btn-info" style="margin-left: 20px;">
-        Reset</button>
+    <div style="display: inline-block; width: 100px;">
+      <button mat-stroked-button (click)="reset()" style="margin-left: 20px;"> Reset </button>
     </div>
   </div>
 </div>
