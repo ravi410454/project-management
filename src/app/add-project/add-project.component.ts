@@ -1,7 +1,9 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { DatePipe } from '@angular/common';
+
 import { ProjectService } from '../project.service';
 import { UsersService } from '../users.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ManagerModalComponent } from '../modal/manager-modal.component';
 
 declare var $: any;
@@ -9,7 +11,8 @@ declare var $: any;
 @Component({
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
-  styleUrls: ['./add-project.component.css']
+  styleUrls: ['./add-project.component.css'],
+  providers: [DatePipe]
 })
 export class AddProjectComponent implements OnInit {
   @Input() projectData = { projectId: '', project: '', startDate: '', endDate: '', priority: '', managerId: '' };
@@ -21,19 +24,26 @@ export class AddProjectComponent implements OnInit {
   managerName: string;
   managerId: string;
 
-  constructor(public dialog: MatDialog, 
-    public usersService: UsersService, 
+  constructor(private datePipe: DatePipe,
+    public dialog: MatDialog,
+    public usersService: UsersService,
     public projectService: ProjectService) { }
 
   ngOnInit() {
     this.getProjects();
     this.getUsers();
+    this.defaultDate();
+  }
+
+  defaultDate() {
+    this.projectData.startDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.projectData.endDate = this.datePipe.transform(
+      new Date().setDate(new Date().getDate() + 1), 'yyyy-MM-dd');
   }
 
   getProjects() {
     this.projects = [];
     this.projectService.getProjects().subscribe((data: {}) => {
-      console.log(data);
       this.projects = data;
     });
   }
@@ -115,23 +125,12 @@ export class AddProjectComponent implements OnInit {
   reset() {
     this.projectData = { projectId: '', project: '', startDate: '', endDate: '', priority: '', managerId: '' };
     this.managerName = "";
+    this.defaultDate();
   }
 
-  setStartEndDate() {
+  enableStartEndDates() {
     this.enableDates = !this.enableDates;
-    $(document).ready( function() {
-      $('#startDate').val(new Date());
-  });​
-      var date = new Date();
-
-      var day = date.getDate();
-      var month = date.getMonth() + 1;
-      var year = date.getFullYear();
-
-      var today = month + "/" + day + "/" +year ;
-      var nextDay = year + "-" + month + "-" + (day + 1);
-      this.projectData.startDate = year + "-" + month + "-" + day ;
-      this.projectData.endDate = nextDay;
+    this.defaultDate();
   }
 
   openDialog(): void {

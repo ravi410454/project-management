@@ -1,14 +1,14 @@
 <div class="container-fluid" style="padding-left: 20px">
-  <div class="row">
+  <div class="row" style="width: 1000px;">
 
-    <div mat-dialog-content style="padding-left: 20px">
-        &nbsp;&nbsp;Project:
+    <div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+      <label style="width: 100px;"> Project: </label>
       <input disabled [(ngModel)]="projectName" />
       <button mat-stroked-button (click)="openDialog()"> Search </button>
     </div>
-    
-    <div mat-dialog-content style="padding-left: 20px">
-      &nbsp;&nbsp;Sort Task By:
+    <div style="width: 100px;"> </div>
+    <div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+      <label style="width: 100px;"> Sort Task By: </label>
       <button mat-stroked-button (click)="sortByStart()">Start Date</button>
       <button mat-stroked-button (click)="sortByEnd()">End Date</button>
       <button mat-stroked-button (click)="sortByPriority()">Priority</button>
@@ -16,7 +16,7 @@
     </div>
 
   </div>
-  
+
   <div class="row">
     <table class="table">
       <thead>
@@ -39,7 +39,8 @@
         <td>{{task.endDate}}</td>
         <td>{{task.status}}</td>
         <td>
-          <button mat-stroked-button (click)="editTask(task)" style="margin-left: 20px;"> Edit</button>
+          <button mat-stroked-button [routerLink]="['/edit-task', task.taskId]" style="margin-left: 20px;">
+            Edit</button>
           <button mat-stroked-button (click)="endTask(task)"> End Task</button>
         </td>
       </tr>

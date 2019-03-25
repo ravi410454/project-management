@@ -1,16 +1,18 @@
+<div *ngIf="errorPresent" style="width: 545px;" class="alert alert-danger" role="alert">{{errorMsg}}</div>
+
 <div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
   <label style="width: 100px;"> Project: </label>
   <input type="hidden" [(ngModel)]="taskData.projectId" />
   <input disabled [(ngModel)]="taskData.project" style="width: 350px;" />
-  <button mat-stroked-button (click)="openProjectDialog()"> Search </button>
+  <button mat-stroked-button [disabled]="isEditTask" (click)="openProjectDialog()"> Search </button>
 </div>
 
 <div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
   <label style="width: 100px;"> Task: </label>
-  <input [(ngModel)]="taskData.task" style="width: 350px;" />
+  <input [(ngModel)]="taskData.task" style="width: 350px;" required/>
   <br>
   <label style="width: 100px;"> </label>
-  <input type="checkbox" id="parentTask" [(ngModel)]="isParentTask"/> Parent Task
+  <input type="checkbox" id="parentTask" [disabled]="isEditTask" [(ngModel)]="isParentTask"/> Parent Task
 </div>
 
 <div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">

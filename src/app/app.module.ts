@@ -38,6 +38,11 @@ const appRoutes: Routes = [
     data: { title: 'Add Task' }
   },
   {
+    path: 'edit-task/:taskId',
+    component: AddTaskComponent,
+    data: { title: 'Edit Task' }
+  },
+  {
     path: '',
     component: ViewTaskComponent,
     pathMatch: 'full'

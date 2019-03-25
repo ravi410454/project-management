@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TaskService } from '../task.service';
 import { ProjectService } from '../project.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ProjectModalComponent } from '../modal/project-modal.component'
 

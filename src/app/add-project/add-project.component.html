@@ -8,9 +8,10 @@
   </tr>
   <tr>
     <td colspan="8" style="padding: 2%; width: 100%">
-      <input type="checkbox" (click)="setStartEndDate()" />
-      <input id="startDate" *ngIf="enableDates" style="margin-left: 20px;" type="date" [(ngModel)]="projectData.startDate" />
-      <input id="endDate" *ngIf="enableDates" style="margin-left: 20px;" type="date" [(ngModel)]="projectData.endDate" />
+      <input type="checkbox" (click)="enableStartEndDates()" />
+      <label> Set Start and End Date </label>
+      <input id="startDate" [disabled]="!enableDates" style="margin-left: 20px;" type="date" [(ngModel)]="projectData.startDate" />
+      <input id="endDate" [disabled]="!enableDates" style="margin-left: 20px;" type="date" [(ngModel)]="projectData.endDate" />
     </td>
   </tr>
   <tr>
