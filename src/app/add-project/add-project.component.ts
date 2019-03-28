@@ -23,6 +23,8 @@ export class AddProjectComponent implements OnInit {
   showUpdate = false;
   managerName: string;
   managerId: string;
+  errorMsg = '';
+  errorPresent = false;
 
   constructor(private datePipe: DatePipe,
     public dialog: MatDialog,
@@ -93,6 +95,12 @@ export class AddProjectComponent implements OnInit {
   }
 
   createProject() {
+    if (this.isInvalidRequest()) {
+      this.errorPresent = true;
+      return;
+    } else {
+      this.errorPresent = false;
+    }
     this.projectService.addProject(this.projectData)
       .subscribe(res => {
         this.getProjects();
@@ -110,6 +118,12 @@ export class AddProjectComponent implements OnInit {
   }
 
   updateProject(project) {
+    if (this.isInvalidRequest()) {
+      this.errorPresent = true;
+      return;
+    } else {
+      this.errorPresent = false;
+    }
     this.projectService.updateProject(this.projectData.projectId, this.projectData)
       .subscribe(res => {
         this.getProjects();
@@ -126,6 +140,8 @@ export class AddProjectComponent implements OnInit {
     this.projectData = { projectId: '', project: '', startDate: '', endDate: '', priority: '', managerId: '' };
     this.managerName = "";
     this.defaultDate();
+    this.errorMsg = '';
+    this.errorPresent = false;
   }
 
   enableStartEndDates() {
@@ -143,5 +159,18 @@ export class AddProjectComponent implements OnInit {
       this.managerName = result.firstName + " " + result.lastName;
       this.projectData.managerId = result.userId;
     });
+  }
+
+  isInvalidRequest() {
+    if (this.projectData.project == '') {
+      this.errorMsg = "Project is required.";
+      return true;
+    }
+
+    if (this.projectData.startDate > this.projectData.endDate) {
+      this.errorMsg = "Start date can not be greater then end date.";
+      return true;
+    }
+    return false;
   }
 }

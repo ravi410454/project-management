@@ -1,157 +1,133 @@
-<table class="container-fluid bg-light" style="border: hidden">
-  <tr>
-    <td colspan="8">
-      <label for="projectTitle">Project:</label>
-      <input id="projectTitle" name="projectTitle" type="text" style="margin-left: 50px;"
-        [(ngModel)]="projectData.project" required />
-    </td>
-  </tr>
-  <tr>
-    <td colspan="8" style="padding: 2%; width: 100%">
-      <input type="checkbox" (click)="enableStartEndDates()" />
-      <label> Set Start and End Date </label>
-      <input id="startDate" [disabled]="!enableDates" style="margin-left: 20px;" type="date" [(ngModel)]="projectData.startDate" />
-      <input id="endDate" [disabled]="!enableDates" style="margin-left: 20px;" type="date" [(ngModel)]="projectData.endDate" />
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style="width: 25%;"> <label for="priority">Priority:</label></td>
-    <td colspan="6" style="width: 75%;">
-      0<input id="priority" style="padding-top: 10px;" width="400" type="range" value="0" list="tickmarks" step="1"
-        min="0" max="30" [(ngModel)]="projectData.priority">30
-      <datalist id="tickmarks">
-        <option value="0" label="0">
-        <option value="1">
-        <option value="2">
-        <option value="3">
-        <option value="4">
-        <option value="5">
-        <option value="6">
-        <option value="7">
-        <option value="8">
-        <option value="9">
-        <option value="10">
-        <option value="11">
-        <option value="12">
-        <option value="13">
-        <option value="14">
-        <option value="15">
-        <option value="16">
-        <option value="17">
-        <option value="18">
-        <option value="19">
-        <option value="20">
-        <option value="21">
-        <option value="22">
-        <option value="23">
-        <option value="24">
-        <option value="25">
-        <option value="26">
-        <option value="27">
-        <option value="28">
-        <option value="29">
-        <option value="30" label="30">
-      </datalist>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style="width: 25%;">
-      <label for="manager">Manager:</label>
-    </td>
-    <td colspan="6" style="width: 75%;">
-      <input type="hidden" [(ngModel)]="projectData.managerId" />
-      <input type="text" disabled [(ngModel)]="managerName"/>
-      <button (click)="openDialog()">Select Manager</button>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="8" style="width: 100%;" class="align-items-end">
-      <div style="width: 50%;text-align: right;">
-        <div *ngIf="showAdd" style="display: inline-block">
-          <button (click)="createProject()" style="margin-left: 20px;" class="btn btn-info" style="margin-left: 20px;">
-            Add</button>
-        </div>
-        <div *ngIf="showUpdate" style="display: inline-block">
-          <button (click)="updateProject()" style="margin-left: 20px;" class="btn btn-info" style="margin-left: 20px;">
-            Update</button>
-        </div>
-        <div style="display: inline-block">
-          <button (click)="reset()" style="margin-left: 20px;" class="btn btn-info" style="margin-left: 20px;">
-            Reset</button>
+<div *ngIf="errorPresent" style="width: 545px;" class="alert alert-danger" role="alert">{{errorMsg}}</div>
+
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;"> Project: </label>
+  <input type="text" style="width: 420px;" [(ngModel)]="projectData.project" required />
+</div>
+
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <input type="checkbox" (click)="enableStartEndDates()" />
+  <label> Set Start and End Date </label>
+  <input id="startDate" [disabled]="!enableDates" type="date" [(ngModel)]="projectData.startDate" />
+  <input id="endDate" [disabled]="!enableDates" type="date" [(ngModel)]="projectData.endDate" />
+</div>
+
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;">Priority:</label>
+  0<input id="priority" style="padding-top: 10px; width: 400px" type="range" value="0" list="tickmarks" step="1" min="0"
+    max="30" [(ngModel)]="projectData.priority">30
+  <datalist id="tickmarks">
+    <option value="0" label="0">
+    <option value="1">
+    <option value="2">
+    <option value="3">
+    <option value="4">
+    <option value="5">
+    <option value="6">
+    <option value="7">
+    <option value="8">
+    <option value="9">
+    <option value="10">
+    <option value="11">
+    <option value="12">
+    <option value="13">
+    <option value="14">
+    <option value="15">
+    <option value="16">
+    <option value="17">
+    <option value="18">
+    <option value="19">
+    <option value="20">
+    <option value="21">
+    <option value="22">
+    <option value="23">
+    <option value="24">
+    <option value="25">
+    <option value="26">
+    <option value="27">
+    <option value="28">
+    <option value="29">
+    <option value="30" label="30">
+  </datalist>
+</div>
+
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;">Manager:</label>
+  <input type="hidden" [(ngModel)]="projectData.managerId" />
+  <input type="text" style="width: 330px;" disabled [(ngModel)]="managerName" />
+  <button mat-stroked-button style="margin-left: 10px;" (click)="openDialog()">Search</button>
+</div>
+
+<div mat-dialog-content style="padding-left: 20px; padding-top: 20px;">
+  <div style="width: 500px; text-align: right;">
+    <div *ngIf="showAdd" style="display: inline-block">
+      <button (click)="createProject()" mat-stroked-button style="margin-left: 20px;"> Add </button>
+    </div>
+    <div *ngIf="showUpdate" style="display: inline-block">
+      <button (click)="updateProject()" mat-stroked-button style="margin-left: 20px;"> Update </button>
+    </div>
+    <div style="display: inline-block">
+      <button (click)="reset()" mat-stroked-button style="margin-left: 20px;"> Reset </button>
+    </div>
+  </div>
+</div>
+
+<hr>
+<div style="width: 650px; text-align: right;">
+  <input type="text" [(ngModel)]="searchText" placeholder="Search..." class="border-gray"
+    style="width: 420px; margin-left: 100px;" />
+</div>
+<div style="width: 650px; text-align: right;">
+  <div style="margin-left: 85px;">
+    <div style="display: inline-block">Sort By: </div>
+    <div style="display: inline-block">
+      <button mat-stroked-button (click)="sortByStartDate()">Start Date</button>
+    </div>
+    <div style="display: inline-block">
+      <button mat-stroked-button (click)="sortByEndDate()">End Date</button>
+    </div>
+    <div style="display: inline-block">
+      <button mat-stroked-button (click)="sortByPriority()">Priority</button>
+    </div>
+    <div style="display: inline-block">
+      <button mat-stroked-button (click)="sortByCompleted()">Completed</button>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content style="width: 650px; padding-top: 10px;">
+  <ul *ngFor="let project of projects | filter: searchText" class="list-group">
+    <li class="list-group-item" style="width: 650px;">
+      <div style="display: inline-block;">
+        <ul class="list-group">
+          <li class="list-group-item" style="width: 400px; padding-top: 10px;">
+            <label style="width: 100px">Project: </label>
+            {{project.project}}
+          </li>
+          <li class="list-group-item" style="width: 400px; padding-top: 10px;">
+            <label style="width: 100px">No. of Tasks: </label> {{project.taskCount}}
+            <label style="width: 100px; margin-left: 30px">Completed: </label> {{project.completed}}
+          </li>
+          <li class="list-group-item" style="width: 400px; padding-top: 10px;">
+            <label style="width: 80px">Start Date: </label> {{project.startDate}}
+            <label style="width: 80px">End Date: </label> {{project.endDate}}
+          </li>
+        </ul>
+      </div>
+      <div style="display: inline-block;">
+        <div class="list-group">
+          <label class="list-group-item">Priority</label>
+          <label class="list-group-item" style="height: 120px;">{{project.priority}}</label>
         </div>
       </div>
-    </td>
-  </tr>
-</table>
-<hr>
-<div style="width: 50%;text-align: right;">
-  <input type="text" [(ngModel)]="searchText" placeholder="Search..." class="border-gray" style="width: 650px;" />
+      <div style="display: inline-block;">
+        <div class="list-group" style="padding-left: 10px;">
+          <button class="list-group-item list-group-item-action" (click)="editProject(project)" mat-stroked-button>
+            Update
+          </button>
+          <button class="list-group-item list-group-item-action" (click)="suspendProject(project)" mat-stroked-button>
+            Suspend </button>
+        </div>
+      </div>
+    </li>
+  </ul>
 </div>
-<div style="width: 50%;text-align: right;">
-  <div style="display: inline-block">Sort By: </div>
-  <div style="display: inline-block">
-    <button (click)="sortByStartDate()" class="btn btn-info" style="margin-left: 20px;">
-      Start Date</button>
-  </div>
-  <div style="display: inline-block">
-    <button (click)="sortByEndDate()" class="btn btn-info" style="margin-left: 20px;"> End
-      Date</button>
-  </div>
-  <div style="display: inline-block">
-    <button (click)="sortByPriority()" class="btn btn-info" style="margin-left: 20px;">
-      Priority</button>
-  </div>
-  <div style="display: inline-block">
-    <button (click)="sortByCompleted()" class="btn btn-info" style="margin-left: 20px;">
-      Completed</button>
-  </div>
-</div>
-<table sortable-table (sorted)="onSorted($event)">
-  <tr *ngFor="let project of projects | filter: searchText">
-    <td colspan="4">
-      <table>
-        <tr>
-          <td style="width: 10%">Project: </td>
-          <td style="width: 90%" colspan="3">{{project.project}}</td>
-        </tr>
-        <tr sortable-column="completed">
-          <td style="width: 10%">No. of Tasks: </td>
-          <td style="width: 40%">{{project.taskCount}}</td>
-          <td style="width: 10%">Completed: </td>
-          <td style="width: 40%">{{project.completed}}</td>
-        </tr>
-        <tr>
-          <td style="width: 10%">Start Date: </td>
-          <td style="width: 40%">{{project.startDate}}</td>
-          <td style="width: 10%">End Date: </td>
-          <td style="width: 40%">{{project.endDate}}</td>
-        </tr>
-      </table>
-    </td>
-    <td colspan="2">
-      <table>
-        <tr>
-          <td>Priority</td>
-        </tr>
-        <tr>
-          <td rowspan="2">{{project.priority}}</td>
-        </tr>
-      </table>
-    </td>
-    <td colspan="2">
-      <table>
-        <tr>
-          <td>
-            <button (click)="editProject(project)" style="margin-left: 20px; margin-bottom: 5px" class="btn btn-info">
-              Update</button>
-          </td>
-        </tr>
-        <tr>
-          <td><button (click)="suspendProject(project)" style="margin-left: 20px;" class="btn btn-info">
-              Suspend</button>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>

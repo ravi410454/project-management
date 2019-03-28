@@ -17,7 +17,7 @@
 
 <div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
   <label style="width: 100px;"> Priority: </label>
-  0<input id="priority" [disabled]="isParentTask" style="padding-top: 10px;" width="400" type="range" value="0" list="tickmarks" step="1" min="0"
+  0<input id="priority" [disabled]="isParentTask" style="padding-top: 10px; width: 400px;" type="range" value="0" list="tickmarks" step="1" min="0"
     max="30" [(ngModel)]="taskData.priority">30
   <datalist id="tickmarks">
     <option value="0" label="0">

@@ -1,34 +1,63 @@
-<div class="col-md-12">
-  <div class="table-responsive table-container">
-    <input type="text" [(ngModel)]="searchText" placeholder="Search..." class="border-dark"
-      style="width: 340px;" />
-    <table class="table">
-      <tr>
-        <label>First Name:
-          <input [(ngModel)]="userData.firstName" placeholder="First Name" />
-        </label><br>
-        <label>Last Name:
-          <input [(ngModel)]="userData.lastName" placeholder="Last Name" />
-        </label><br>
-        <label>Employee ID:
-          <input [(ngModel)]="userData.employeeId" placeholder="Employee ID" />
-        </label><br>
-        <button (click)="addUser()" ng-hide="IsUpdateVisible" ng-show="IsAddVisible" class="btn btn-info"> Add</button>
-        <button (click)="updateUser()" ng-click="hideUpdate()" ng-hide="IsAddVisible" ng-show="IsUpdateVisible" class="btn btn-info"> Update</button>
-        <button (click)="reset()" style="margin-left: 20px;" class="btn btn-info"> Reset</button>
-      </tr>
-      <tr *ngFor="let user of users | filter: searchText">
-        <td class="hidden">{{user.userId}}</td>
-        <td>{{user.firstName}}</td>
-        <td>{{user.lastName}}</td>
-        <td>{{user.employeeId}}</td>
-        <td>
-          <button (click)="deleteUser(user)" class="btn btn-info"> Delete</button>
-          <button (click)="editUser(user)" ng-click="hideAdd()" style="margin-left: 20px;" class="btn btn-info">
-            Edit</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+<div *ngIf="errorPresent" style="width: 545px;" class="alert alert-danger" role="alert">{{errorMsg}}</div>
+
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;"> First Name: </label>
+  <input [(ngModel)]="userData.firstName" placeholder="First Name" style="width: 400px;" />
+</div>
+
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;"> Last Name: </label>
+  <input [(ngModel)]="userData.lastName" placeholder="Last Name" style="width: 400px;" />
+</div>
+
+<div mat-dialog-content style="padding-left: 20px; padding-top: 10px;">
+  <label style="width: 100px;"> Employee ID: </label>
+  <input [(ngModel)]="userData.employeeId" placeholder="Employee ID" style="width: 200px;" />
+</div>
+
+<div mat-dialog-content style="padding-left: 20px; padding-top: 20px;">
+  <div style="width: 500px; text-align: right;">
+    <div *ngIf="showAdd" style="display: inline-block; width: 100px;">
+      <button (click)="addUser()" mat-stroked-button style="margin-left: 20px;"> Add </button>
+    </div>
+    <div *ngIf="showUpdate" style="display: inline-block; width: 100px;">
+      <button (click)="updateUser()" mat-stroked-button style="margin-left: 20px;"> Update</button>
+    </div>
+    <div style="display: inline-block; width: 100px;">
+      <button (click)="reset()" mat-stroked-button style="margin-left: 20px;"> Reset</button>
+    </div>
   </div>
+</div>
+<div mat-dialog-content style="width: 525px; text-align: left">
+  <hr>
+</div>
+<div mat-dialog-content style="width: 500px; padding-left: 20px;">
+  <input type="text" [(ngModel)]="searchText" placeholder="Search..." style="width: 140px;" />
+  <label style="width: 75px; padding-left: 20px;"> Sort : </label>
+  <button mat-stroked-button (click)="sortByFirstNm()">First Name</button>
+  <button mat-stroked-button (click)="sortByLastNm()">Last Name</button>
+  <button mat-stroked-button (click)="sortById()">Id</button>
+</div>
+
+<div mat-dialog-content style="width: 500px;">
+  <ul *ngFor="let user of users | filter: searchText" class="list-group" style="width: 500px; list-style-type:none;">
+    <li class="list-group-item" style="width: 500px;">
+      <div style="display: inline-block;">
+        <ul class="list-group">
+          <li class="list-group-item" style="width: 300px; padding-top: 10px;">{{user.firstName}}</li>
+          <li class="list-group-item" style="width: 300px; padding-top: 10px;">{{user.lastName}}</li>
+          <li class="list-group-item" style="width: 300px; padding-top: 10px;">{{user.employeeId}}</li>
+        </ul>
+      </div>
+      <div style="display: inline-block;">
+        <div class="list-group" style="padding-left: 20px;">
+          <button class="list-group-item list-group-item-action" (click)="deleteUser(user)" mat-stroked-button> Delete
+          </button>
+          <button class="list-group-item list-group-item-action" (click)="editUser(user)" mat-stroked-button> Edit
+          </button>
+          <label></label>
+        </div>
+      </div>
+    </li>
+  </ul>
 </div>
